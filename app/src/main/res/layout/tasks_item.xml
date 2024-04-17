@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginBottom="13dp"
+    android:background="@drawable/tasks_item_background">
+
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBox"
+        style="@style/Widget.App.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:useMaterialThemeColors="false" />
+
+    <ImageButton
+        android:id="@+id/uploadBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="#FFFDF4"
+        android:padding="10dp"
+        android:src="@drawable/ic_upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/taskTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/checkBox"
+        tools:text="@string/add_task_time"
+        android:textSize="13sp"
+        android:textColor="#80000000"
+        android:fontFamily="@font/rubik"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/taskText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/rubik"
+        android:textColor="#80000000"
+        android:textSize="16sp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:singleLine="true"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+        app:layout_constraintStart_toEndOf="@id/checkBox"
+        tools:text="@string/task_text" />
+
+    <TextView
+        android:id="@+id/taskText_strike"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/rubik"
+        android:textColor="#80000000"
+        android:textSize="16sp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:singleLine="true"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+        app:layout_constraintStart_toEndOf="@id/checkBox"
+        tools:text="@string/task_text_strike" />
+
+
+    <ImageButton
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:backgroundTint="#FFFDF4"
+        android:padding="10dp"
+        android:src="@drawable/ic_delete"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uploadBtn" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

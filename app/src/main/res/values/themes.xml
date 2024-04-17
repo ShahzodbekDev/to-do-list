@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ToDoList" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/chackbox_button_tint</item>
+    </style>
+
+    <style name="Theme.ToDoList" parent="Base.Theme.ToDoList" />
+</resources>
