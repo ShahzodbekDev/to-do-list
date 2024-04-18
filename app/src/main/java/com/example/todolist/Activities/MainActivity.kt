@@ -2,19 +2,16 @@ package com.example.todolist.Activities
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.Adapters.CalendarAdapter
 import com.example.todolist.Adapters.TaskLitener
 
 import com.example.todolist.Adapters.TasksAdapter
 import com.example.todolist.Models.TasksModel
-import com.example.todolist.R
 import com.example.todolist.SQLiteDatabase.TasksDbManager
 import com.example.todolist.SQLiteDatabase.TasksSQLiteHelper
 import com.example.todolist.databinding.ActivityMainBinding
@@ -35,10 +32,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
-
-
-
 
 
 //      TasksSaveData
@@ -46,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         dbManager.onCreate()
         tasksAdapter = TasksAdapter(this)
 
-        
+
 //   Add Task Dialog
         val currentTime = Calendar.getInstance()
         val addTimeHour = currentTime.get(Calendar.HOUR_OF_DAY)
@@ -54,27 +47,25 @@ class MainActivity : AppCompatActivity() {
 
         binding.addTask.setOnClickListener {
             val dialogViewBinding = AddTaskDialogViewBinding.inflate(layoutInflater, null, false)
-            val dialog = AlertDialog.Builder(this)
-                .setView(dialogViewBinding.root)
-                .create()
+            val dialog = AlertDialog.Builder(this).setView(dialogViewBinding.root).create()
             dialogViewBinding.addTaskBtn.setOnClickListener {
                 val taskTitle = dialogViewBinding.enteriTask.text
 
 
 
 
-               if (taskTitle.isEmpty()) {
-                   Toast.makeText(this, "Enter task", Toast.LENGTH_SHORT).show()
-               } else{
-                   dbManager.insertTask(
-                       TasksModel(
-                           Tasktitle = taskTitle.toString(),
-                           Addhour = addTimeHour,
-                           Addminute = addTimeMinute,
-                           IsChecked = false
-                       )
-                   )
-               }
+                if (taskTitle.isEmpty()) {
+                    Toast.makeText(this, "Enter task", Toast.LENGTH_SHORT).show()
+                } else {
+                    dbManager.insertTask(
+                        TasksModel(
+                            Tasktitle = taskTitle.toString(),
+                            Addhour = addTimeHour,
+                            Addminute = addTimeMinute,
+                            IsChecked = false
+                        )
+                    )
+                }
                 tasksAdapter.submitList(fetchTasks())
                 tasksAdapter.notifyItemInserted(tasksList.size)
                 dialog.dismiss()
@@ -90,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = myLayoutManager
         }
 
-        
+
 //      TaskListener
         tasksAdapter.setTaskLitener(object : TaskLitener {
             override fun onDeleteTask(position: Int) {
@@ -112,44 +103,46 @@ class MainActivity : AppCompatActivity() {
                 tasksAdapter.notifyItemInserted(id)
             }
 
-            override fun updateTask(tasksModel: TasksModel) {
-                // Tanlangan vazifani yangilash uchun qo'llanma dialogini ochish
-                val dialogViewBinding = UpdateDialogViewBinding.inflate(layoutInflater, null, false)
-                val dialog = AlertDialog.Builder(this@MainActivity)
-                    .setView(dialogViewBinding.root)
-                    .create()
-
-                // Qo'llanma oynasida tanlangan vazifa sarlavhasini joylashtirish
-                dialogViewBinding.updateTaskTitle.text = tasksModel.Tasktitle
-
-                // Qo'llanma oynasida vazifa matnini joylashtirish
-                dialogViewBinding.updateTask.setText(tasksModel.Tasktitle)
-
-                // Yangilash tugmasi bosilganda
-                dialogViewBinding.updateTaskBtn.setOnClickListener {
-                    // Vazifa sarlavhasini o'zgartirish
-                    val taskTitle = dialogViewBinding.updateTask.text.toString()
-
-                    // Yangilangan vazifani yangilash
-                    val updatedTasksModel = tasksModel.copy(
-                        Tasktitle = taskTitle,
-                        Addhour = addTimeHour,
-                        Addminute = addTimeMinute,
-                        IsChecked = false
-                    )
-                    dbManager.updateTask(updatedTasksModel)
-
-                    // Yangilangan vazifalarni qayta yuklash
-                    tasksAdapter.submitList(fetchTasks())
-                    tasksAdapter.notifyItemRangeChanged(tasksList.indexOf(tasksModel), tasksModel.id!!)
+            override fun updateTask(tasksModel: TasksModel) =
+                run { // Tanlangan vazifani yangilash uchun qo'llanma dialogini ochish
+                    val dialogViewBinding =
+                        UpdateDialogViewBinding.inflate(layoutInflater, null, false)
+                    val dialog =
+                        AlertDialog.Builder(this@MainActivity).setView(dialogViewBinding.root)
+                            .create()
 
 
-                    // Qo'llanmani yopish
-                    dialog.dismiss()
+                    dialogViewBinding.updateTaskTitle.text = tasksModel.Tasktitle
+
+
+                    dialogViewBinding.updateTask.setText(tasksModel.Tasktitle)
+
+
+                    dialogViewBinding.updateTaskBtn.setOnClickListener {
+
+                        val taskTitle = dialogViewBinding.updateTask.text.toString()
+
+                        val updatedTasksModel = tasksModel.copy(
+                            Tasktitle = taskTitle,
+                            Addhour = addTimeHour,
+                            Addminute = addTimeMinute,
+                            IsChecked = false
+                        )
+                        dbManager.updateTask(updatedTasksModel)
+
+
+                        tasksAdapter.submitList(fetchTasks())
+                        tasksAdapter.notifyItemRangeChanged(
+                            tasksList.indexOf(tasksModel), tasksModel.id!!
+                        )
+
+
+
+                        dialog.dismiss()
+                    }
+
+                    dialog.show()
                 }
-                // Qo'llanmani ko'rsatish
-                dialog.show()
-            }
 
 
         })
@@ -168,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//  SQLite all data fetch
+    //  SQLite all data fetch
     private fun fetchTasks(): List<TasksModel> {
         val cursor = dbManager.fetch()
         tasksList.clear()
@@ -198,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         return tasksList
     }
 
-    
+
     // Methods
     private fun getDaysInMonth(month: Int, year: Int): Int {
         val calendar = Calendar.getInstance()

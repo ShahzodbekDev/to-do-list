@@ -70,9 +70,10 @@ class TasksDbManager(val context: Context) {
             null,
         )
     }
-    fun updateIsChecked(id: Int , IsChecked: Boolean): Int {
+
+    fun updateIsChecked(id: Int, IsChecked: Boolean): Int {
         val contentValues = ContentValues()
-        contentValues.put(TasksSQLiteHelper.IsChecked,IsChecked)
+        contentValues.put(TasksSQLiteHelper.IsChecked, IsChecked)
         return database.update(
             TasksSQLiteHelper.TableName,
             contentValues,
@@ -88,8 +89,6 @@ class TasksDbManager(val context: Context) {
             null
         )
     }
-
-
 
 
 }

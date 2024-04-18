@@ -43,14 +43,14 @@ class TasksAdapter(private val context: Context) :
             binding.uploadBtn.setOnClickListener {
                 taskLitener?.updateTask(tasksModel = getItem(adapterPosition))
             }
-            binding.checkBox.setOnClickListener{
+            binding.checkBox.setOnClickListener {
                 val id = getItem(adapterPosition).id
-             if (binding.checkBox.isChecked){
-                 taskLitener?.isChecked(id!!)
+                if (binding.checkBox.isChecked) {
+                    taskLitener?.isChecked(id!!)
 
-             } else {
-                 taskLitener?.unChecked(id!!)
-             }
+                } else {
+                    taskLitener?.unChecked(id!!)
+                }
 
             }
         }

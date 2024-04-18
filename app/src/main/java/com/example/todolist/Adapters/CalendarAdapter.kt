@@ -46,11 +46,10 @@ class CalendarAdapter(
 
             holder.dayNumber.layoutParams.width = 80
             holder.dayNumber.layoutParams.height = 80
-            holder.dayNumber.setPadding(0,10,0,0)
+            holder.dayNumber.setPadding(0, 10, 0, 0)
             holder.dayName.setTextColor(Color.parseColor("#DFBD43"))
 
         }
-
 
 
     }

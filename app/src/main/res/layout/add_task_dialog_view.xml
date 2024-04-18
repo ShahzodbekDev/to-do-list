@@ -19,19 +19,22 @@
 
     <EditText
         android:id="@+id/enteriTask"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/addTaskTitle"
-        tools:layout_editor_absoluteX="20dp" />
+        android:fontFamily="@font/rubik"
+        app:layout_constraintEnd_toStartOf="@+id/addTask_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addTaskTitle" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addTask_btn"
         android:layout_width="140dp"
-        android:text="add"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_addtask"
+        app:backgroundTint="@color/chackBoxColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enteriTask" />
-
+        app:layout_constraintTop_toBottomOf="@+id/addTaskTitle" />
+    " />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

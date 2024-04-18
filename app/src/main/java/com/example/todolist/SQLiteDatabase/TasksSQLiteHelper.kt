@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class TasksSQLiteHelper(context: Context):SQLiteOpenHelper(context,"my.db",null,3) {
+class TasksSQLiteHelper(context: Context) : SQLiteOpenHelper(context, "my.db", null, 3) {
 
     companion object {
 
@@ -14,7 +14,6 @@ class TasksSQLiteHelper(context: Context):SQLiteOpenHelper(context,"my.db",null,
         const val AddTimeHour = "AddTimeHour"
         const val AddTimeMinute = "AddTimeMinute"
         const val IsChecked = "isChecked"
-
 
 
     }
