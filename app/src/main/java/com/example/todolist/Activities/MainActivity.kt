@@ -1,9 +1,11 @@
 package com.example.todolist.Activities
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ import com.example.todolist.SQLiteDatabase.TasksSQLiteHelper
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.databinding.AddTaskDialogViewBinding
 import com.example.todolist.databinding.UpdateDialogViewBinding
+import java.time.LocalDateTime
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var tasksAdapter: TasksAdapter
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,32 +45,29 @@ class MainActivity : AppCompatActivity() {
 
 
 //   Add Task Dialog
-        val currentTime = Calendar.getInstance()
-        val addTimeHour = currentTime.get(Calendar.HOUR_OF_DAY)
-        val addTimeMinute = currentTime.get(Calendar.MINUTE)
-
         binding.addTask.setOnClickListener {
             val dialogViewBinding = AddTaskDialogViewBinding.inflate(layoutInflater, null, false)
             val dialog = AlertDialog.Builder(this).setView(dialogViewBinding.root).create()
             dialogViewBinding.addTaskBtn.setOnClickListener {
                 val taskTitle = dialogViewBinding.enteriTask.text
 
-
-
-
                 if (taskTitle.isEmpty()) {
                     Toast.makeText(this, "Enter task", Toast.LENGTH_SHORT).show()
                 } else {
+                    val currentDateTimeForTask = LocalDateTime.now() // Yangi obyekt yaratiladi
                     dbManager.insertTask(
                         TasksModel(
                             Tasktitle = taskTitle.toString(),
-                            Addhour = addTimeHour,
-                            Addminute = addTimeMinute,
+                            Addhour = currentDateTimeForTask.hour,
+                            Addminute = currentDateTimeForTask.minute,
                             IsChecked = false
                         )
                     )
                 }
-                tasksAdapter.submitList(fetchTasks())
+
+
+
+        tasksAdapter.submitList(fetchTasks())
                 tasksAdapter.notifyItemInserted(tasksList.size)
                 dialog.dismiss()
             }
@@ -104,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun updateTask(tasksModel: TasksModel) =
-                run { // Tanlangan vazifani yangilash uchun qo'llanma dialogini ochish
+                run {
                     val dialogViewBinding =
                         UpdateDialogViewBinding.inflate(layoutInflater, null, false)
                     val dialog =
@@ -121,11 +122,12 @@ class MainActivity : AppCompatActivity() {
                     dialogViewBinding.updateTaskBtn.setOnClickListener {
 
                         val taskTitle = dialogViewBinding.updateTask.text.toString()
+                        val currentDateTimeForTask = LocalDateTime.now()
 
                         val updatedTasksModel = tasksModel.copy(
                             Tasktitle = taskTitle,
-                            Addhour = addTimeHour,
-                            Addminute = addTimeMinute,
+                            Addhour = currentDateTimeForTask.hour,
+                            Addminute = currentDateTimeForTask.minute,
                             IsChecked = false
                         )
                         dbManager.updateTask(updatedTasksModel)
@@ -136,16 +138,14 @@ class MainActivity : AppCompatActivity() {
                             tasksList.indexOf(tasksModel), tasksModel.id!!
                         )
 
-
-
                         dialog.dismiss()
                     }
 
                     dialog.show()
                 }
-
-
         })
+
+        Log.d("TAG", "onCreate: ${fetchTasks()}")
 
 
 //     CalendarView
@@ -180,13 +180,10 @@ class MainActivity : AppCompatActivity() {
                 val isChecked = cursor.getInt(isCheckedIndex) != 0
 
                 val tasksModel = TasksModel(id, title, timeHour, timeMinute, isChecked)
-                Log.d("TAG", "onCreate: $id $title $timeHour $timeMinute $isChecked")
-
 
                 tasksList.add(tasksModel)
 
             } while (cursor.moveToNext())
-
         }
         return tasksList
     }

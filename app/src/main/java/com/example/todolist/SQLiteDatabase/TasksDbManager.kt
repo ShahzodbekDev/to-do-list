@@ -24,7 +24,7 @@ class TasksDbManager(val context: Context) {
                 put("TaskTitle", tasksModel.Tasktitle)
                 put("AddTimeHour", tasksModel.Addhour)
                 put("AddTimeMinute", tasksModel.Addminute)
-                put("AddTimeMinute", tasksModel.IsChecked)
+                put("isChecked", tasksModel.IsChecked)
 
             })
     }

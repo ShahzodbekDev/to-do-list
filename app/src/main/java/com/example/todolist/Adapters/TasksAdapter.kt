@@ -2,10 +2,12 @@ package com.example.todolist.Adapters
 
 import android.content.Context
 import android.graphics.Paint
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,7 @@ import com.example.todolist.R
 import com.example.todolist.SQLiteDatabase.TasksDbManager
 import com.example.todolist.SQLiteDatabase.TasksSQLiteHelper
 import com.example.todolist.databinding.TasksItemBinding
+import java.time.LocalDateTime
 
 
 class MyDiff() : DiffUtil.ItemCallback<TasksModel>() {
@@ -55,6 +58,7 @@ class TasksAdapter(private val context: Context) :
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(tasksModel: TasksModel) = with(binding) {
 
             if (tasksModel.IsChecked == true) {
@@ -84,6 +88,7 @@ class TasksAdapter(private val context: Context) :
                 taskText.paintFlags = taskText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
 
+            val currentDateTime = LocalDateTime.now()
 
             val hourType = if (tasksModel.Addhour < 12) "AM" else "PM"
             taskTime.text = root.context.getString(
@@ -91,7 +96,9 @@ class TasksAdapter(private val context: Context) :
                 tasksModel.Addhour,
                 tasksModel.Addminute,
                 hourType
+
             )
+
         }
     }
 
@@ -105,6 +112,7 @@ class TasksAdapter(private val context: Context) :
         return TasksViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
         holder.bind(getItem(position))
     }

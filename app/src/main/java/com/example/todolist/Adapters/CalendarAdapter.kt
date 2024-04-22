@@ -28,7 +28,7 @@ class CalendarAdapter(
         val cal = Calendar.getInstance()
         val today = cal.get(Calendar.DAY_OF_MONTH)
         cal.add(Calendar.DAY_OF_MONTH, position - startingDay)
-        val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+        val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK) - 1
 
 
 
